@@ -1,0 +1,9 @@
+/* Admin.css - basic styles for the admin page */
+.admin-page table th, .admin-page table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.admin-page table tr:nth-child(even){background-color: #f9f9f9;}
+
+.admin-page table tr:hover {background-color: #f1f1f1;}

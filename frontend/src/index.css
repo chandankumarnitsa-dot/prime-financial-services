@@ -32,8 +32,8 @@
   --shadow-gold: 0 4px 14px 0 rgba(212, 175, 55, 0.39);
 
   /* Transitions */
-  --transition-fast: 0.2s ease-in-out;
-  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-smooth: 1.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 * {
@@ -145,7 +145,7 @@ ul {
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.8s var(--transition-smooth) forwards;
+  animation: fadeInUp var(--transition-smooth) forwards;
   opacity: 0; /* starts hidden before animation runs */
 }
 
@@ -161,7 +161,7 @@ ul {
 }
 
 .animate-fade-in-left {
-  animation: fadeInLeft 0.8s var(--transition-smooth) forwards;
+  animation: fadeInLeft var(--transition-smooth) forwards;
   opacity: 0;
 }
 

@@ -21,6 +21,7 @@ const Contact = () => {
     problems: ''
   });
   const [status, setStatus] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -31,10 +32,8 @@ const Contact = () => {
     setStatus('sending');
 
     try {
-      // Use localhost during local development, but use a live URL when deployed online
-      const apiUrl = import.meta.env.PROD
-        ? 'https://api.primefinancialservices.com/api/contact' // Make sure this matches your live backend domain!
-        : 'http://localhost:5000/api/contact';
+      // Use localhost for both dev and local preview testing
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/contact';
 
       const response = await fetch(apiUrl, {
         method: 'POST',
@@ -44,6 +43,8 @@ const Contact = () => {
         body: JSON.stringify(formData),
       });
 
+      const result = await response.json();
+
       if (response.ok) {
         setStatus('success');
         setFormData({
@@ -52,10 +53,12 @@ const Contact = () => {
         });
       } else {
         setStatus('error');
+        setErrorMessage(result.message || 'There was an error sending your message. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       setStatus('error');
+      setErrorMessage('Network error. Please try again.');
     }
   };
 
@@ -161,7 +164,9 @@ const Contact = () => {
                 </button>
 
                 {status === 'error' && (
-                  <p style={{ color: '#DC2626', marginTop: '1rem' }}>There was an error sending your message. Please try again.</p>
+                  <p style={{ color: '#DC2626', marginTop: '1rem', fontWeight: '500' }}>
+                    {errorMessage}
+                  </p>
                 )}
               </form>
             )}

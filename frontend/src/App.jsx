@@ -8,6 +8,7 @@ import CreditCardIssue from './pages/CreditCardIssue';
 import LegalSupport from './pages/LegalSupport';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/legal-support" element={<LegalSupport />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact-us" element={<Contact />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
         <Footer />

@@ -1,57 +1,63 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const connectDB = require('./config/db');
+const errorHandler = require('./middlewares/errorHandler');
+const contactRoutes = require('./routes/contactRoutes');
+
+// Connect to Database
+connectDB();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
+// Security Middlewares
+app.use(helmet()); // Set security HTTP headers
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow all localhost origins for development and preview
+    if (!origin || origin.startsWith('http://localhost:')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST'],
+  credentials: true,
+}));
+
+// Body Parser Middleware
 app.use(express.json());
+
+// Request logging middleware (optional, good for dev)
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  }
+  next();
+});
 
 // Basic endpoint to check if server is running
 app.get('/api/status', (req, res) => {
   res.json({ status: 'Server is running', timestamp: new Date() });
 });
 
-// Contact Form Endpoint
-app.post('/api/contact', (req, res) => {
-  const { 
-    name, 
-    email, 
-    phone, 
-    city, 
-    income, 
-    personalLoan, 
-    creditCard, 
-    language, 
-    harassment, 
-    problems 
-  } = req.body;
+// API Routes
+app.use('/api/contact', contactRoutes);
 
-  // Basic validation
-  if (!name || !email || !phone) {
-    return res.status(400).json({ error: 'Name, email, and phone are required fields.' });
-  }
+// Global Error Handler Middleware
+// This must be the last middleware after all routes
+app.use(errorHandler);
 
-  // In a real application, you would save this to a database or send an email.
-  console.log('Received new contact enquiry:');
-  console.log(`Name: ${name}`);
-  console.log(`Email: ${email}`);
-  console.log(`Phone: ${phone}`);
-  console.log(`City: ${city}`);
-  console.log(`Monthly Income: ${income}`);
-  console.log(`Personal Loan Dues: ${personalLoan}`);
-  console.log(`Credit Card Dues: ${creditCard}`);
-  console.log(`Preferred Language: ${language}`);
-  console.log(`Facing Harassment: ${harassment}`);
-  console.log(`Problems: ${problems}`);
-
-  // Simulate a slight delay to show the loading state on the frontend
-  setTimeout(() => {
-    res.status(200).json({ success: true, message: 'Enquiry received successfully.' });
-  }, 1000);
+// Start Server
+const PORT = process.env.PORT || 5000;
+const server = app.listen(PORT, () => {
+  console.log(`Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+// Handle unhandled promise rejections gracefully
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`);
+  // Close server & exit process
+  server.close(() => process.exit(1));
 });
