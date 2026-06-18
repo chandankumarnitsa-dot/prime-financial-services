@@ -36,7 +36,7 @@ const Contact = () => {
       let apiUrl = import.meta.env.VITE_API_URL;
       if (!apiUrl) {
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.match(/^192\.168\.|^172\.1[6-9]\.|^10\./);
-        apiUrl = isLocal ? `http://${window.location.hostname}:5000/api/contact` : '/api/contact';
+        apiUrl = isLocal ? `http://${window.location.hostname}:5000/api/contact` : '/_/backend/api/contact';
       }
 
       const response = await fetch(apiUrl, {
