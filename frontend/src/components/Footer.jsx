@@ -9,9 +9,9 @@ const Footer = () => {
     <footer className="footer">
       <div className="container footer-container">
         <div className="footer-section">
-          <Link to="/" className="navbar-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <img src="/logo.png" alt="Prime Financial Services Logo" style={{ height: '40px' }} />
-            <span className="logo-text" style={{ fontSize: '1.25rem' }}>Prime Financial <span className="logo-accent">Services</span></span>
+          <Link to="/" className="navbar-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+            <img src="/logo.png" alt="Prime Loan Settlement Logo" style={{ height: '42px', filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.1))' }} />
+            <span className="logo-text" style={{ fontSize: '1.4rem', fontWeight: '800', letterSpacing: '-0.5px', color: 'white' }}>Prime Loan <span className="logo-accent" style={{ color: 'var(--color-accent)' }}>Settlement</span></span>
           </Link>
           <p className="footer-about">
             India's Leading Financial Dispute Resolution Company. We help individuals and families resolve loan disputes and protect their legal rights.
@@ -67,7 +67,7 @@ const Footer = () => {
       
       <div className="footer-bottom">
         <div className="container footer-bottom-container">
-          <p>&copy; {new Date().getFullYear()} Prime Financial Services. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Prime Loan Settlement. All Rights Reserved.</p>
           <div className="legal-links">
             <Link to="/privacy-policy">Privacy Policy</Link>
             <Link to="/terms-conditions">Terms & Conditions</Link>

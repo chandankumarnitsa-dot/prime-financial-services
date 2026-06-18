@@ -5,19 +5,19 @@ import './TestimonialSlider.css';
 const testimonials = [
   {
     id: 1,
-    text: "Prime Financial Experts, thank you so much for your support and guidance in helping me overcome my financial difficulties. It is a huge relief for me to finally close all my loans and credit cards. Without your constant support, negotiating settlements aligned with my financial capacity would not have been possible.",
+    text: "Prime Loan Settlement Experts, thank you so much for your support and guidance in helping me overcome my financial difficulties. It is a huge relief for me to finally close all my loans and credit cards. Without your constant support, negotiating settlements aligned with my financial capacity would not have been possible.",
     author: "Sumit Gagneja",
     location: "Bangalore"
   },
   {
     id: 2,
-    text: "I had a great experience with the Prime Financial Team. Their responses and actions taken till now for my case have been very valuable for me. I would highly recommend their services to everyone in need of reliable legal assistance.",
+    text: "I had a great experience with the Prime Loan Settlement Team. Their responses and actions taken till now for my case have been very valuable for me. I would highly recommend their services to everyone in need of reliable legal assistance.",
     author: "Kushal Gupta",
     location: "Delhi"
   },
   {
     id: 3,
-    text: "Thank you to the Prime Financial Team for your timely support during my financial crisis. Your guidance and intervention helped stop the harassment from the bank’s collection agents and gave me the clarity and relief I needed.",
+    text: "Thank you to the Prime Loan Settlement Team for your timely support during my financial crisis. Your guidance and intervention helped stop the harassment from the bank’s collection agents and gave me the clarity and relief I needed.",
     author: "B.V. Neeraj",
     location: "Tamil Nadu"
   },

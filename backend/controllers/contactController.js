@@ -66,9 +66,9 @@ const submitContact = async (req, res, next) => {
         });
 
         const mailOptions = {
-          from: `"Prime Financial" <${process.env.EMAIL_USER}>`,
+          from: `"Prime Loan Settlement" <${process.env.EMAIL_USER}>`,
           to: process.env.RECEIVER_EMAIL,
-          subject: `New Lead: ${contact.name} - Prime Financial Services`,
+          subject: `New Lead: ${contact.name} - Prime Loan Settlement`,
           html: `
             <h2>New Contact Enquiry Received</h2>
             <p>A new lead has been submitted on the website. Here are the details:</p>

@@ -32,7 +32,7 @@ const LegalSupport = () => {
                 When dealing with outstanding debt, banks and financial institutions often resort to sending legal notices or threatening court action. You don't have to face this alone.
               </p>
               <p>
-                At Prime Financial Services, our empaneled legal experts specialize in financial disputes. We provide an impenetrable legal shield to protect your rights, ensuring you are never unfairly targeted or harassed by aggressive collection tactics.
+                At Prime Loan Settlement, our empaneled legal experts specialize in financial disputes. We provide an impenetrable legal shield to protect your rights, ensuring you are never unfairly targeted or harassed by aggressive collection tactics.
               </p>
               
               <ul>

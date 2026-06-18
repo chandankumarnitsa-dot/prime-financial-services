@@ -27,7 +27,7 @@ const About = () => {
             <div className="animate-fade-in-left">
               <h2 className="section-title" style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>Who We Are</h2>
               <p style={{ fontSize: '1.125rem', marginBottom: '1.5rem', color: 'var(--color-text-muted)' }}>
-                Prime Financial Services is India’s leading financial dispute resolution company. We are a team of expert financial consultants and legal professionals dedicated to helping individuals and families overcome the stress of loan defaults.
+                Prime Loan Settlement is India’s leading financial dispute resolution company. We are a team of expert financial consultants and legal professionals dedicated to helping individuals and families overcome the stress of loan defaults.
               </p>
               <p style={{ fontSize: '1.125rem', marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
                 We believe that no one should live under the constant pressure of financial distress or be subjected to unethical recovery practices. Our mission is to provide you with a legally sound, strategic path to becoming debt-free.

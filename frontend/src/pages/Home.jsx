@@ -74,7 +74,7 @@ const Home = () => {
           <div className="text-center">
             <h2 className="section-title animate-fade-in-up">Client Reviews</h2>
             <p className="section-subtitle animate-fade-in-up delay-100">
-              Don't just take our word for it. Here is what our clients have to say about their journey to financial freedom with Prime Financial Services.
+              Don't just take our word for it. Here is what our clients have to say about their journey to financial freedom with Prime Loan Settlement.
             </p>
           </div>
           <div style={{ marginTop: '3rem' }}>
@@ -87,7 +87,7 @@ const Home = () => {
       <section className="section section-bg-white" style={{ backgroundColor: 'var(--color-primary-light)', color: 'white', textAlign: 'center' }}>
         <div className="container">
           <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', color: 'var(--color-bg-white)', fontFamily: 'var(--font-serif)' }}>
-            Prime Financial Experts Are Here to Help You.
+            Prime Loan Settlement Experts Are Here to Help You.
           </h2>
           <p style={{ fontSize: '1.125rem', marginBottom: '2.5rem', color: '#A0AEC0', maxWidth: '700px', margin: '0 auto 2.5rem auto' }}>
             Get Free From Debt Trap, Aggressive Recovery, and Legal Complications. Contact us today for a free consultation.

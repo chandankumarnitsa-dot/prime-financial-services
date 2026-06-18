@@ -37,9 +37,9 @@ const Navbar = () => {
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-container">
-        <Link to="/" className="navbar-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <img src="/logo.png" alt="Prime Financial Services Logo" style={{ height: '40px' }} />
-          <span className="logo-text" style={{ fontSize: '1.25rem' }}>Prime Financial <span className="logo-accent">Services</span></span>
+        <Link to="/" className="navbar-logo" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+          <img src="/logo.png" alt="Prime Loan Settlement Logo" style={{ height: '42px', filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.1))' }} />
+          <span className="logo-text" style={{ fontSize: '1.4rem', fontWeight: '800', letterSpacing: '-0.5px', color: 'var(--color-primary)' }}>Prime Loan <span className="logo-accent" style={{ color: 'var(--color-accent)' }}>Settlement</span></span>
         </Link>
 
         <nav className={`navbar-links ${isOpen ? 'active' : ''}`}>

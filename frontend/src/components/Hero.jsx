@@ -15,7 +15,7 @@ const Hero = () => {
           </div>
           
           <h1 className="hero-title animate-fade-in-up delay-100">
-            Welcome To <span className="text-accent">Prime Financial Services</span>
+            Welcome To <span className="text-accent">Prime Loan Settlement</span>
           </h1>
           
           <p className="hero-subtitle animate-fade-in-up delay-200">
