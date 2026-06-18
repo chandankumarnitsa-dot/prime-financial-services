@@ -32,8 +32,12 @@ const Contact = () => {
     setStatus('sending');
 
     try {
-      // Use current hostname for both dev and local preview testing so it works on mobile
-      const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000/api/contact`;
+      // Determine the API URL dynamically
+      let apiUrl = import.meta.env.VITE_API_URL;
+      if (!apiUrl) {
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname.match(/^192\.168\.|^172\.1[6-9]\.|^10\./);
+        apiUrl = isLocal ? `http://${window.location.hostname}:5000/api/contact` : '/api/contact';
+      }
 
       const response = await fetch(apiUrl, {
         method: 'POST',
