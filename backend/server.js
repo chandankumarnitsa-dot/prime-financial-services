@@ -15,8 +15,8 @@ const app = express();
 app.use(helmet()); // Set security HTTP headers
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow all localhost origins for development and preview
-    if (!origin || origin.startsWith('http://localhost:')) {
+    // Allow all localhost and local network IPs for development and preview
+    if (!origin || origin.startsWith('http://localhost:') || origin.startsWith('http://192.168.') || origin.startsWith('http://172.16.')) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -58,6 +58,6 @@ const server = app.listen(PORT, () => {
 // Handle unhandled promise rejections gracefully
 process.on('unhandledRejection', (err, promise) => {
   console.log(`Error: ${err.message}`);
-  // Close server & exit process
-  server.close(() => process.exit(1));
+  // We do NOT close the server so it can still serve requests and return 500 errors to the frontend.
+  // server.close(() => process.exit(1));
 });

@@ -32,8 +32,8 @@ const Contact = () => {
     setStatus('sending');
 
     try {
-      // Use localhost for both dev and local preview testing
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/contact';
+      // Use current hostname for both dev and local preview testing so it works on mobile
+      const apiUrl = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:5000/api/contact`;
 
       const response = await fetch(apiUrl, {
         method: 'POST',

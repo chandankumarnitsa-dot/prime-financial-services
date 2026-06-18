@@ -1,7 +1,6 @@
 const express = require('express');
 const { body } = require('express-validator');
 const { submitContact, getContacts } = require('../controllers/contactController');
-const { contactRateLimiter } = require('../middlewares/rateLimiter');
 const validateRequest = require('../middlewares/validateRequest');
 
 const router = express.Router();
@@ -23,7 +22,6 @@ const contactValidationRules = [
 // Route: POST /api/contact
 router.post(
   '/',
-  contactRateLimiter,
   contactValidationRules,
   validateRequest,
   submitContact

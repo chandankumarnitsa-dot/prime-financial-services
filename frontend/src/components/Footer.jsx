@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Globe, Share2, MessageCircle, Link2, Hash } from 'lucide-react';
+import { MapPin, Phone, Mail } from 'lucide-react';
+import { FaFacebook, FaInstagram, FaYoutube, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
@@ -16,11 +17,11 @@ const Footer = () => {
             India's Leading Financial Dispute Resolution Company. We help individuals and families resolve loan disputes and protect their legal rights.
           </p>
           <div className="social-links">
-            <a href="#" className="social-link" title="Facebook"><Globe size={20} /></a>
-            <a href="#" className="social-link" title="Instagram"><Share2 size={20} /></a>
-            <a href="#" className="social-link" title="YouTube"><MessageCircle size={20} /></a>
-            <a href="#" className="social-link" title="LinkedIn"><Link2 size={20} /></a>
-            <a href="#" className="social-link" title="Twitter"><Hash size={20} /></a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className="social-link" title="Facebook"><FaFacebook size={20} /></a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="social-link" title="Instagram"><FaInstagram size={20} /></a>
+            <a href="#" className="social-link" title="YouTube"><FaYoutube size={20} /></a>
+            <a href="#" className="social-link" title="LinkedIn"><FaLinkedin size={20} /></a>
+            <a href="#" className="social-link" title="Twitter"><FaTwitter size={20} /></a>
           </div>
         </div>
 
@@ -39,8 +40,8 @@ const Footer = () => {
           <ul className="footer-links">
             <li><Link to="/credit-card-issue">Credit Card Issues</Link></li>
             <li><Link to="/services">Personal Loan Issues</Link></li>
-            <li><Link to="/services">Business Loan Issues</Link></li>
-            <li><Link to="/services">Anti-Harassment</Link></li>
+            <li><Link to="/business-loan-issues">Business Loan Issues</Link></li>
+            <li><Link to="/anti-harassment">Anti-Harassment</Link></li>
             <li><Link to="/legal-support">Legal Support</Link></li>
           </ul>
         </div>

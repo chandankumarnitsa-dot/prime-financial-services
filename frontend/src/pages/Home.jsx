@@ -15,25 +15,29 @@ const Home = () => {
       icon: CreditCard,
       title: "Credit Card Settlement",
       description: "Resolve pending credit card dues with our expert negotiation. We help you achieve a settlement amount you can afford without harassment.",
-      delay: "delay-100"
+      delay: "delay-100",
+      link: "/credit-card-issue"
     },
     {
       icon: Landmark,
       title: "Personal Loan Settlement",
       description: "Struggling with personal loan EMIs? Our legal team structures a feasible exit plan to settle your unsecured personal loans.",
-      delay: "delay-200"
+      delay: "delay-200",
+      link: "/services"
     },
     {
       icon: Briefcase,
       title: "Business Loan Issues",
       description: "Protect your business assets and operations. We provide legal shielding and strategic resolution for defaulted business loans.",
-      delay: "delay-300"
+      delay: "delay-300",
+      link: "/business-loan-issues"
     },
     {
       icon: ShieldAlert,
       title: "Anti-Harassment Services",
       description: "Stop illegal recovery agent harassment instantly. Our legal notices and direct bank communications ensure your peace of mind.",
-      delay: "delay-400"
+      delay: "delay-400",
+      link: "/anti-harassment"
     }
   ];
 
@@ -57,6 +61,7 @@ const Home = () => {
                 title={service.title}
                 description={service.description}
                 delay={service.delay}
+                link={service.link}
               />
             ))}
           </div>

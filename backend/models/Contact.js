@@ -12,11 +12,13 @@ const contactSchema = new mongoose.Schema(
       required: [true, 'Email is required'],
       trim: true,
       lowercase: true,
+      index: true,
     },
     phone: {
       type: String,
       required: [true, 'Phone number is required'],
       trim: true,
+      index: true,
     },
     city: {
       type: String,
@@ -51,6 +53,9 @@ const contactSchema = new mongoose.Schema(
     timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
 );
+
+// Indexes for faster querying in massive databases
+contactSchema.index({ createdAt: -1 });
 
 const Contact = mongoose.model('Contact', contactSchema);
 

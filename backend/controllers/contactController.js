@@ -1,6 +1,10 @@
 const Contact = require('../models/Contact');
 const nodemailer = require('nodemailer');
 
+// In-memory cache to prevent duplicates even if DB is down
+const submittedEmails = new Set();
+const submittedPhones = new Set();
+
 /**
  * @desc    Submit a new contact/enquiry
  * @route   POST /api/contact
@@ -9,21 +13,46 @@ const nodemailer = require('nodemailer');
 const submitContact = async (req, res, next) => {
   try {
     const { email, phone } = req.body;
+    let contact = req.body; // Fallback to req.body if DB fails
+    let dbSuccess = false;
 
-    // Check for duplicates (same email OR same phone)
-    const isDuplicate = await Contact.findOne({
-      $or: [{ email }, { phone }]
-    });
-
-    if (isDuplicate) {
+    // 1. Check in-memory cache first
+    if (submittedEmails.has(email) || submittedPhones.has(phone)) {
       return res.status(409).json({
         success: false,
-        message: 'We have already received your details. Our team is reviewing your case and will contact you shortly.',
+        message: 'We have already received an enquiry with these details. Our team is reviewing your case and will be in touch shortly.',
       });
     }
 
-    // Create new contact entry in DB
-    const contact = await Contact.create(req.body);
+    try {
+      // 2. Check DB for duplicates
+      const isDuplicate = await Contact.findOne({
+        $or: [{ email }, { phone }]
+      });
+
+      if (isDuplicate) {
+        // Add to cache so we don't query DB next time
+        submittedEmails.add(email);
+        submittedPhones.add(phone);
+
+        return res.status(409).json({
+          success: false,
+          message: 'We have already received an enquiry with these details. Our team is reviewing your case and will be in touch shortly.',
+        });
+      }
+
+      // Create new contact entry in DB
+      const savedContact = await Contact.create(req.body);
+      contact = savedContact; // Use the saved DB version which has _id
+      dbSuccess = true;
+    } catch (dbError) {
+      console.error('Database error during contact submission:', dbError.message);
+      console.log('Proceeding to send email anyway...');
+    }
+
+    // Add to in-memory cache to prevent future duplicates during this session
+    submittedEmails.add(email);
+    submittedPhones.add(phone);
 
     // Prepare Email Dispatch
     try {
@@ -56,26 +85,32 @@ const submitContact = async (req, res, next) => {
               <tr><td style="background-color: #f8fafc; font-weight: bold;">Problem Description</td><td style="white-space: pre-wrap;">${contact.problems || 'N/A'}</td></tr>
             </table>
             <br/>
-            <p>You can view all leads on your <a href="http://localhost:4176/admin">Admin Dashboard</a>.</p>
+            ${!dbSuccess ? '<p style="color: red;"><strong>Note:</strong> This lead could not be saved to the database due to connection issues.</p>' : ''}
           `,
         };
 
-        // Send asynchronously without awaiting to prevent holding up the API response
-        transporter.sendMail(mailOptions).catch(err => {
-          console.error('Nodemailer error: Failed to send email alert.', err.message);
-        });
+        // Await email to ensure it sends, or catch error
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully via Nodemailer.');
       } else {
          console.warn('Nodemailer warning: Email config variables missing in .env. Email not sent.');
       }
     } catch (emailError) {
-      console.error('Nodemailer error: Exception during email prep.', emailError.message);
+      console.error('Nodemailer error: Failed to send email alert.', emailError.message);
+      if (!dbSuccess) {
+        // Both DB and Email failed
+        return res.status(500).json({
+          success: false,
+          message: 'Failed to process your request. Please try again later.'
+        });
+      }
     }
 
     res.status(201).json({
       success: true,
       message: 'Enquiry received successfully.',
       data: {
-        id: contact._id,
+        id: contact._id || 'email-only-no-id',
       },
     });
   } catch (error) {
@@ -90,11 +125,29 @@ const submitContact = async (req, res, next) => {
  */
 const getContacts = async (req, res, next) => {
   try {
-    const enquiries = await Contact.find().sort({ createdAt: -1 });
+    // Pagination defaults
+    const page = parseInt(req.query.page, 10) || 1;
+    const limit = parseInt(req.query.limit, 10) || 20;
+    const skip = (page - 1) * limit;
+
+    // Get total count for pagination metadata
+    const totalContacts = await Contact.countDocuments();
+
+    // Fetch paginated results
+    const enquiries = await Contact.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     res.status(200).json({
       success: true,
       count: enquiries.length,
+      pagination: {
+        totalContacts,
+        totalPages: Math.ceil(totalContacts / limit),
+        currentPage: page,
+        limit,
+      },
       data: enquiries.map(e => ({
         id: e._id,
         receivedAt: e.createdAt,

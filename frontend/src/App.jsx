@@ -8,7 +8,8 @@ import CreditCardIssue from './pages/CreditCardIssue';
 import LegalSupport from './pages/LegalSupport';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
-import Admin from './pages/Admin';
+import BusinessLoanIssues from './pages/BusinessLoanIssues';
+import AntiHarassment from './pages/AntiHarassment';
 
 function App() {
   return (
@@ -23,8 +24,9 @@ function App() {
             <Route path="/credit-card-issue" element={<CreditCardIssue />} />
             <Route path="/legal-support" element={<LegalSupport />} />
             <Route path="/services" element={<Services />} />
+            <Route path="/business-loan-issues" element={<BusinessLoanIssues />} />
+            <Route path="/anti-harassment" element={<AntiHarassment />} />
             <Route path="/contact-us" element={<Contact />} />
-            <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
         <Footer />

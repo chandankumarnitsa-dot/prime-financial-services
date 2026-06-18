@@ -6,17 +6,30 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
+  
+  // Pagination State
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalContacts, setTotalContacts] = useState(0);
+  const limit = 20;
 
   useEffect(() => {
     const fetchContacts = async () => {
+      setLoading(true);
       try {
         const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/contact';
-        const response = await fetch(apiUrl);
+        const response = await fetch(`${apiUrl}?page=${page}&limit=${limit}`);
         if (!response.ok) {
           throw new Error('Failed to fetch contacts');
         }
         const result = await response.json();
         setContacts(result.data);
+        if (result.pagination) {
+           setTotalPages(result.pagination.totalPages);
+           setTotalContacts(result.pagination.totalContacts);
+        } else {
+           setTotalContacts(result.count || result.data.length);
+        }
       } catch (err) {
         setError(err.message);
       } finally {
@@ -25,7 +38,7 @@ const Admin = () => {
     };
 
     fetchContacts();
-  }, []);
+  }, [page]);
 
   const toggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id);
@@ -36,7 +49,7 @@ const Admin = () => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <h1 style={{ color: '#1E293B', fontSize: '2rem', fontWeight: '700' }}>Lead Management (Admin)</h1>
         <div style={{ backgroundColor: '#DBEAFE', color: '#1E40AF', padding: '0.5rem 1rem', borderRadius: '9999px', fontWeight: '600' }}>
-          Total Leads: {contacts.length}
+          Total Leads: {totalContacts}
         </div>
       </div>
       
@@ -135,6 +148,28 @@ const Admin = () => {
               </tbody>
             </table>
           </div>
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.5rem', borderTop: '1px solid #E2E8F0', backgroundColor: '#F8FAFC' }}>
+              <button 
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1 || loading}
+                style={{ padding: '0.5rem 1rem', borderRadius: '6px', border: '1px solid #CBD5E1', backgroundColor: page === 1 ? '#F1F5F9' : 'white', color: page === 1 ? '#94A3B8' : '#334155', cursor: page === 1 ? 'not-allowed' : 'pointer', fontWeight: '500', transition: 'all 0.2s' }}
+              >
+                Previous
+              </button>
+              <span style={{ color: '#475569', fontSize: '0.875rem' }}>
+                Page <span style={{ fontWeight: '600', color: '#0F172A' }}>{page}</span> of <span style={{ fontWeight: '600', color: '#0F172A' }}>{totalPages}</span>
+              </span>
+              <button 
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages || loading}
+                style={{ padding: '0.5rem 1rem', borderRadius: '6px', border: '1px solid #CBD5E1', backgroundColor: page === totalPages ? '#F1F5F9' : 'white', color: page === totalPages ? '#94A3B8' : '#334155', cursor: page === totalPages ? 'not-allowed' : 'pointer', fontWeight: '500', transition: 'all 0.2s' }}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

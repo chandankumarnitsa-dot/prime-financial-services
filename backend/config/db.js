@@ -8,8 +8,8 @@ const connectDB = async () => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`Error connecting to MongoDB: ${error.message}`);
-    // Graceful exit
-    process.exit(1); 
+    console.error('Please make sure your current IP address is whitelisted in MongoDB Atlas.');
+    // We remove process.exit(1) so the server can still start and return 500 errors to the frontend.
   }
 };
 
