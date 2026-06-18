@@ -13,18 +13,7 @@ const app = express();
 
 // Security Middlewares
 app.use(helmet()); // Set security HTTP headers
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow localhost, local network IPs, and Vercel domains
-    if (!origin || origin.startsWith('http://localhost:') || origin.startsWith('http://192.168.') || origin.startsWith('http://172.16.') || origin.includes('vercel.app')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST'],
-  credentials: true,
-}));
+app.use(cors());
 
 // Body Parser Middleware
 app.use(express.json());
