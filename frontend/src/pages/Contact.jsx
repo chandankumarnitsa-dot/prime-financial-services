@@ -192,7 +192,7 @@ const Contact = () => {
               </div>
               <div className="info-content">
                 <h4>Contact us</h4>
-                <a href="mailto:contact@primefinancial.com">contact@primefinancial.com</a>
+                <a href="mailto:contact@primeloansettlement.com">contact@primeloansettlement.com</a>
                 <a href="tel:+919643623690">+91 9643623690</a>
               </div>
             </div>

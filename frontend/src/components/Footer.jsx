@@ -55,7 +55,7 @@ const Footer = () => {
             </li>
             <li>
               <Mail size={18} className="contact-icon" />
-              <a href="mailto:contact@primefinancial.com">contact@primefinancial.com</a>
+              <a href="mailto:contact@primeloansettlement.com">contact@primeloansettlement.com</a>
             </li>
             <li>
               <MapPin size={18} className="contact-icon" />

@@ -72,7 +72,7 @@ const LegalSupport = () => {
                   <div className="ls-contact-icon">
                     <Mail size={24} strokeWidth={2} />
                   </div>
-                  <a href="mailto:contact@primefinancial.com">contact@primefinancial.com</a>
+                  <a href="mailto:contact@primeloansettlement.com">contact@primeloansettlement.com</a>
                 </div>
               </div>
 
