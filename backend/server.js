@@ -6,8 +6,8 @@ const connectDB = require('./config/db');
 const errorHandler = require('./middlewares/errorHandler');
 const contactRoutes = require('./routes/contactRoutes');
 
-// Connect to Database
-connectDB();
+// Connect to Database (Disabled as user only wants Nodemailer)
+// connectDB();
 
 const app = express();
 

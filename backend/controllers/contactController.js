@@ -13,8 +13,7 @@ const submittedPhones = new Set();
 const submitContact = async (req, res, next) => {
   try {
     const { email, phone } = req.body;
-    let contact = req.body; // Fallback to req.body if DB fails
-    let dbSuccess = false;
+    let contact = req.body; // Using request body directly
 
     // 1. Check in-memory cache first
     if (submittedEmails.has(email) || submittedPhones.has(phone)) {
@@ -24,32 +23,7 @@ const submitContact = async (req, res, next) => {
       });
     }
 
-    try {
-      // 2. Check DB for duplicates
-      const isDuplicate = await Contact.findOne({
-        $or: [{ email }, { phone }]
-      });
-
-      if (isDuplicate) {
-        // Add to cache so we don't query DB next time
-        submittedEmails.add(email);
-        submittedPhones.add(phone);
-
-        return res.status(409).json({
-          success: false,
-          message: 'We have already received an enquiry with these details. Our team is reviewing your case and will be in touch shortly.',
-        });
-      }
-
-      // Create new contact entry in DB
-      const savedContact = await Contact.create(req.body);
-      contact = savedContact; // Use the saved DB version which has _id
-      dbSuccess = true;
-    } catch (dbError) {
-      console.error('Database error during contact submission:', dbError.message);
-      console.log('Proceeding to send email anyway...');
-    }
-
+    // 2. Removed MongoDB interaction as requested by the user.
     // Add to in-memory cache to prevent future duplicates during this session
     submittedEmails.add(email);
     submittedPhones.add(phone);
@@ -85,7 +59,6 @@ const submitContact = async (req, res, next) => {
               <tr><td style="background-color: #f8fafc; font-weight: bold;">Problem Description</td><td style="white-space: pre-wrap;">${contact.problems || 'N/A'}</td></tr>
             </table>
             <br/>
-            ${!dbSuccess ? '<p style="color: red;"><strong>Note:</strong> This lead could not be saved to the database due to connection issues.</p>' : ''}
           `,
         };
 
@@ -97,13 +70,10 @@ const submitContact = async (req, res, next) => {
       }
     } catch (emailError) {
       console.error('Nodemailer error: Failed to send email alert.', emailError.message);
-      if (!dbSuccess) {
-        // Both DB and Email failed
-        return res.status(500).json({
-          success: false,
-          message: 'Failed to process your request. Please try again later.'
-        });
-      }
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to process your request. Please try again later.'
+      });
     }
 
     res.status(201).json({
